@@ -23,7 +23,6 @@ def token_checker():
 			print("Unable To Find tokens.txt")
 			input("")
 			return
-		invite_code = "BbXykkqm"
 		validtokens = []
 		invalidtokens = []
 		lockedtokens = []
@@ -98,4 +97,5 @@ def token_checker():
 					print("Enter A Valid Choice")
 			if main2 == "n":
 				return
+invite_code = "BbXykkqm"
 token_checker()
