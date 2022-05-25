@@ -15,8 +15,11 @@ def token_checker():
 			tokens.close()
 			loaded_amount = 0
 			for token in tokenlist:
-			    donetokenlist.append(token[:-1])
-			    loaded_amount = int(loaded_amount) + 1
+				if "\n" in token:
+					donetokenlist.append(token[:-1])
+				else:
+					donetokenlist.append(token)
+				loaded_amount = int(loaded_amount) + 1
 			print(str(loaded_amount) + " Tokens Loaded, Press Enter To Start")
 			input("")
 		except Exception:
@@ -31,45 +34,44 @@ def token_checker():
 		lockedtoken = 0
 		invalidtoken = 0
 		for token in donetokenlist:
-		    while True:
-		        r1 = requests.get('https://discord.com/api/v6/auth/login', headers={"Authorization": token})
-		        r1 = str(r1)
-		        if "429" not in r1:
-		            break
-		        if "429" in r1:
-		            print(colorama.Fore.YELLOW + "Ratelimited, Retrying")
-		    r1 = str(r1)
-		    totaltoken = int(totaltoken) + 1
-		    if "400" in r1:
-		        print(colorama.Fore.RED + "Token Invalid")
-		        invalidtokens.append(token)
-		        invalidfile = open("invalid_tokens.txt", "a")
-		        invalidfile.writelines(token+"\n")
-		        invalidfile.close()
-		        invalidtoken = int(invalidtoken) + 1
-		    if "200" in r1:
-		        while True:
-		            r = requests.get(f'https://discord.com/api/v6/invite/{invite_code}', headers={"Authorization": token})
-		            r = str(r)
-		            if "429" not in r:
-		                break
-		            if "429" in r:
-		                print(colorama.Fore.YELLOW + "Ratelimited, Retrying")
-		        r = str(r)
-		        if "200" in r:
-		            print(colorama.Fore.GREEN + "Token Valid")
-		            validtokens.append(token)
-		            validfile = open("valid_tokens.txt", "a")
-		            validfile.writelines(token+"\n")
-		            validfile.close()
-		            validtoken = int(validtoken) + 1
-		        if "403" in r:
-		            print(colorama.Fore.RED + "Token Locked")
-		            lockedtokens.append(token)
-		            lockedfile = open("locked_tokens.txt", "a")
-		            lockedfile.writelines(token+"\n")
-		            lockedfile.close()
-		            lockedtoken = int(lockedtoken) + 1
+			while True:
+				r1 = requests.get('https://discord.com/api/v6/auth/login', headers={"Authorization": token})
+				if "429" not in r1:
+					break
+				if "429" in r1:
+					print(colorama.Fore.YELLOW + "Ratelimited, Retrying")
+			r1 = str(r1)
+			totaltoken = int(totaltoken) + 1
+			if "400" in r1:
+				print(colorama.Fore.RED + "Token Invalid")
+				invalidtokens.append(token)
+				invalidfile = open("invalid_tokens.txt", "a")
+				invalidfile.writelines(token+"\n")
+				invalidfile.close()
+				invalidtoken = int(invalidtoken) + 1
+			if "200" in r1:
+				while True:
+					r = requests.get(f'https://discord.com/api/v6/invite/{invite_code}', headers={"Authorization": token})
+					r = str(r)
+					if "429" not in r:
+						break
+					if "429" in r:
+						print(colorama.Fore.YELLOW + "Ratelimited, Retrying")
+				r = str(r)
+				if "200" in r:
+					print(colorama.Fore.GREEN + "Token Valid")
+					validtokens.append(token)
+					validfile = open("valid_tokens.txt", "a")
+					validfile.writelines(token+"\n")
+					validfile.close()
+					validtoken = int(validtoken) + 1
+				if "403" in r:
+					print(colorama.Fore.RED + "Token Locked")
+					lockedtokens.append(token)
+					lockedfile = open("locked_tokens.txt", "a")
+					lockedfile.writelines(token+"\n")
+					lockedfile.close()
+					lockedtoken = int(lockedtoken) + 1
 		print("\n\nStats:\n")
 		print("Total Checked: " + str(totaltoken))
 		print("Total Valid: " +  str(validtoken))
@@ -97,5 +99,6 @@ def token_checker():
 					print("Enter A Valid Choice")
 			if main2 == "n":
 				return
-invite_code = "BbXykkqm"
-token_checker()
+invite_code = "weYYXeUSNm"
+while True:
+	token_checker()
