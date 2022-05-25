@@ -1,4 +1,4 @@
-# Token Checker
+# Token-Checker
 
 Setup:
 
