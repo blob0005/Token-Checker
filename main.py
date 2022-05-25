@@ -1,3 +1,4 @@
+from turtle import done
 import colorama, requests
 colorama.init(autoreset=True)
 def token_checker():
@@ -33,9 +34,11 @@ def token_checker():
 		validtoken = 0
 		lockedtoken = 0
 		invalidtoken = 0
+		
 		for token in donetokenlist:
 			while True:
 				r1 = requests.get('https://discord.com/api/v6/auth/login', headers={"Authorization": token})
+				r1 = str(r1)
 				if "429" not in r1:
 					break
 				if "429" in r1:
