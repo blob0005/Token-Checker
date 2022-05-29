@@ -1,4 +1,9 @@
-from turtle import done
+try:
+    import os
+    from os import system
+    system("title " + "Token Checker")
+except:
+    pass
 import colorama, requests
 colorama.init(autoreset=True)
 def token_checker():
